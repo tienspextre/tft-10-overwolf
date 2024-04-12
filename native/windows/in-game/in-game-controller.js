@@ -3,7 +3,24 @@ import { HotkeysService } from '../../scripts/services/hotkeys-service.js';
 import { RunningGameService } from '../../scripts/services/running-game-service.js';
 import { kHotkeySecondScreen, kHotkeyToggle } from '../../scripts/constants/hotkeys-ids.js';
 
-const _heartsteelAudios = ['heartsteel1', 'heartsteel2', 'heartsteel3'];
+let _heartsteelAudios = ['heartsteel1', 'heartsteel2', 'heartsteel3'];
+const infoUpdateStructure = {
+  info: {
+    match_info: {
+      round_type: {
+        stage: "",
+        name: "",
+        type: "",
+        native_name: "" // or "Encounter_Carousel" or some other value
+        // other properties of round_type
+      }
+      // other properties of match_info
+    }
+    // other properties of info
+  },
+  feature: ""
+  // other properties of infoUpdate
+};
 
 export class InGameController {
   constructor() {
@@ -104,17 +121,35 @@ export class InGameController {
       case 'assist':
       case 'level':
       case 'matchStart':
+        break;
       case 'matchEnd':
       case 'match_start':
         isHighlight = true;
+        let audioStart1 = document.getElementById('start1');
+        audioStart1.volume = 0;
+        audioStart1.play();
+        audioStart1.pause();
         _heartsteelAudios.forEach(i => {
           let audio = document.getElementById(i);
-          audio.currentTime = 166;
+          audio.currentTime = 0;
+          audio.volume = 0;
           audio.play();
           audio.addEventListener("timeupdate", () => {
               this._checkLoop(audio);
           });
         })
+        let startAudio = document.getElementById('gameStart');
+        startAudio.play();
+        startAudio.addEventListener("timeupdate", () => {
+            if (startAudio.currentTime >= 57){
+              startAudio.pause();
+              audioStart1.currentTime = 
+              audioStart1.volume = 0.25;
+              audioStart1.volume = 0.5;
+              audioStart1.volume = 0.75;
+              audioStart1.volume = 1;
+            }
+          });
         break;
       case 'match_end':
         isHighlight = true;
@@ -129,10 +164,9 @@ export class InGameController {
     let isHighlight = false;
   
     if (infoUpdate.feature === 'match_info') {
-      isHighlight = true;
-      // Switch based on the value of round_type.name
-      let name = infoUpdate.info.match_info.round_type.name;
-      switch (name) {
+      // isHighlight = true;
+      let roundType = JSON.parse(infoUpdate.info.match_info.round_type);
+      switch (roundType.name) {
         case 'Carousel':
           isHighlight = true;
           break;
@@ -140,8 +174,9 @@ export class InGameController {
           isHighlight = true;
           break;
       }
+      this.inGameView.logInfoUpdate(JSON.stringify(infoUpdate), isHighlight);
     }
-    this.inGameView.logInfoUpdate(JSON.stringify(infoUpdate), isHighlight);
+    
   }  
 
   _checkLoop(audio) {
@@ -154,5 +189,20 @@ export class InGameController {
           audio1.play();
         })
       }
+  }
+
+  _fadeInAudio(audioElement, duration) {
+    let volume = 0;
+    let interval = 50; // Adjust this value to control the smoothness of the fade-in
+    let step = 1 / (duration / interval);
+  
+    let fadeInInterval = setInterval(function() {
+      if (volume < 1) {
+        volume += step;
+        audioElement.volume = volume;
+      } else {
+        clearInterval(fadeInInterval);
+      }
+    }, interval);
   }
 }
