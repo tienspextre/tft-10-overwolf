@@ -4,6 +4,7 @@ import { RunningGameService } from '../../scripts/services/running-game-service.
 import { kHotkeySecondScreen, kHotkeyToggle } from '../../scripts/constants/hotkeys-ids.js';
 
 let _heartsteelAudios = ['heartsteel1', 'heartsteel2', 'heartsteel3'];
+let isCarousel = false;
 const infoUpdateStructure = {
   info: {
     match_info: {
@@ -141,15 +142,14 @@ export class InGameController {
         let startAudio = document.getElementById('gameStart');
         startAudio.play();
         startAudio.addEventListener("timeupdate", () => {
-            if (startAudio.currentTime >= 57){
-              startAudio.pause();
-              audioStart1.currentTime = 
-              audioStart1.volume = 0.25;
-              audioStart1.volume = 0.5;
-              audioStart1.volume = 0.75;
-              audioStart1.volume = 1;
-            }
-          });
+          if (startAudio.currentTime >= 50.5){
+            this._fadeOutAudio(startAudio);
+            startAudio.pause();
+            audioStart1.currentTime = 56.5;
+            this._fadeInAudio(audioStart1);
+            audioStart1.play();
+          }
+        });
         break;
       case 'match_end':
         isHighlight = true;
@@ -166,17 +166,66 @@ export class InGameController {
     if (infoUpdate.feature === 'match_info') {
       // isHighlight = true;
       let roundType = JSON.parse(infoUpdate.info.match_info.round_type);
-      switch (roundType.name) {
-        case 'Carousel':
-          isHighlight = true;
-          break;
-        case 'Encounter_Carousel':
-          isHighlight = true;
-          break;
+      if (roundType.native_name == 'Carousel' || roundType.native_name == 'Encounter_Carousel'){
+        isCarousel = true;
+        isHighlight = true;
+        _heartsteelAudios.forEach(i => {
+          let audio = document.getElementById(i);
+          audio.pause();
+          audio.currentTime = 0;
+        })
+        let audioStartCar = document.getElementById('carouselStart');
+        let audioCar = document.getElementById('carousel');
+        // let audioEndCar = document.getElementById('carouselEnd');
+        audioStartCar.play();
+        audioStartCar.addEventListener("timeupdate", () => {
+          if (audioStartCar.currentTime >= 0.9){
+            audioStartCar.pause();
+            audioStartCar.currentTime = 0;
+            audioCar.play();
+          }
+        });
+      }
+      else {
+        let roundType = JSON.parse(infoUpdate.info.match_info.round_type);
+        let stageNumber = roundType.stage;
+        let stage = parseInt(stageNumber.split("-")[0]);
+        if (isCarousel){
+          isCarousel = false;
+          let audioCar = document.getElementById('carousel');
+          let audioEndCar = document.getElementById('carouselEnd');
+          audioCar.pause();
+          audioCar.currentTime = 0;
+          audioEndCar.play();
+          audioEndCar.addEventListener("timeupdate", () => {
+            if (audioEndCar.currentTime >= 1.8){
+              audioEndCar.pause();
+              audioEndCar.currentTime = 0;
+              _heartsteelAudios.forEach(i => {
+                let audio = document.getElementById(i);
+                audio.play();
+              })
+            }
+          });
+        }
+        // if (stage == 1 && stageNumber != '1-1'){
+        //   let startAudio = document.getElementById('gameStart');
+        //   if (startAudio.currentTime > 0) {
+        //     startAudio.pause();
+        //     startAudio.currentTime = 0;
+        //   };
+        // }
+        else if (stage > 1){
+          this._pauseAllAudio();
+          _heartsteelAudios.forEach(i => {
+            let audio = document.getElementById(i);
+            audio.play();
+            this._fadeInAudio(audio);
+          });
+        }
       }
       this.inGameView.logInfoUpdate(JSON.stringify(infoUpdate), isHighlight);
     }
-    
   }  
 
   _checkLoop(audio) {
@@ -191,18 +240,38 @@ export class InGameController {
       }
   }
 
-  _fadeInAudio(audioElement, duration) {
-    let volume = 0;
-    let interval = 50; // Adjust this value to control the smoothness of the fade-in
-    let step = 1 / (duration / interval);
-  
-    let fadeInInterval = setInterval(function() {
-      if (volume < 1) {
-        volume += step;
-        audioElement.volume = volume;
-      } else {
-        clearInterval(fadeInInterval);
-      }
-    }, interval);
+  _fadeInAudio(audioElement) {
+    const duration = 2000; // Animation duration in milliseconds
+    const startVolume = audioElement.volume;
+    const targetVolume = 1.0;
+    const volumeIncrement = (targetVolume - startVolume) / (duration / 20); // Adjust increment for smoother animation
+    const volumeInterval = setInterval(() => {
+        if (audioElement.volume < targetVolume) {
+          audioElement.volume += volumeIncrement;
+        } else {
+            clearInterval(volumeInterval); // Stop interval when volume reaches target
+        }
+    }, 20);
+  }
+
+  _fadeOutAudio(audioElement) {
+    const duration = 2000; // Animation duration in milliseconds
+    const startVolume = audioElement.volume;
+    const targetVolume = 0;
+    const volumeDecrement = (startVolume - targetVolume) / (duration / 20); // Adjust increment for smoother animation
+    const volumeInterval = setInterval(() => {
+        if (audioElement.volume < targetVolume) {
+          audioElement.volume -= volumeDecrement;
+        } else {
+            clearInterval(volumeInterval); // Stop interval when volume reaches target
+        }
+    }, 20);
+  }
+
+  _pauseAllAudio(){
+    const audioElements = document.querySelectorAll('audio');
+    audioElements.forEach(audio => {
+        audio.pause();
+    });
   }
 }
