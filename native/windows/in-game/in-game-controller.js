@@ -3,32 +3,23 @@ import { HotkeysService } from '../../scripts/services/hotkeys-service.js';
 import { RunningGameService } from '../../scripts/services/running-game-service.js';
 import { kHotkeySecondScreen, kHotkeyToggle } from '../../scripts/constants/hotkeys-ids.js';
 
-let _heartsteelAudios = ['heartsteel1', 'heartsteel2', 'heartsteel3'];
+let chosenAudios = ['heartsteelEarly1', 'heartsteelEarly2', 'heartsteelEarly3'];
+let chosenLateAudios2 = ['heartsteelLate11', 'heartsteelLate22', 'heartsteelLate33'];
 let isCarousel = false;
-const infoUpdateStructure = {
-  info: {
-    match_info: {
-      round_type: {
-        stage: "",
-        name: "",
-        type: "",
-        native_name: "" // or "Encounter_Carousel" or some other value
-        // other properties of round_type
-      }
-      // other properties of match_info
-    }
-    // other properties of info
-  },
-  feature: ""
-  // other properties of infoUpdate
-};
+let isMatchEnd = false;
+let isLate = false;
+let isNoTraitEnded = false;
+let audioNoTraitEarly = document.getElementById('noTraitEarly');
+let startAudio = document.getElementById('gameStart'); //Audio game start
+let winAudio = document.getElementById('matchEndWin');
+let loseAudio = document.getElementById('matchEndLose');
 
 export class InGameController {
   constructor() {
     this.inGameView = new InGameView();
     this.hotkeysService = new HotkeysService();
     this.runningGameService = new RunningGameService();
-    // this._heartsteelAudios = ['heartsteel1', 'heartsteel2', 'heartsteel3'];
+    // this.chosenAudios = ['heartsteelEarly1', 'heartsteelEarly2', 'heartsteelEarly3'];
     this._eventListenerBound = this._eventListener.bind(this);
 
     this.owEventBus = null;
@@ -115,7 +106,6 @@ export class InGameController {
   // Logs events
   _gameEventHandler(event) {
     let isHighlight = false;
-
     switch (event.name) {
       case 'kill':
       case 'death': 
@@ -125,34 +115,20 @@ export class InGameController {
         break;
       case 'matchEnd':
       case 'match_start':
-        isHighlight = true;
-        let audioStart1 = document.getElementById('start1');
-        audioStart1.volume = 0;
-        audioStart1.play();
-        audioStart1.pause();
-        _heartsteelAudios.forEach(i => {
+        chosenAudios.forEach(i => { //Preplay chosen audios
           let audio = document.getElementById(i);
           audio.currentTime = 0;
           audio.volume = 0;
           audio.play();
           audio.addEventListener("timeupdate", () => {
-              this._checkLoop(audio);
+              this._checkLoopEarly(audio);
           });
         })
-        let startAudio = document.getElementById('gameStart');
-        startAudio.play();
-        startAudio.addEventListener("timeupdate", () => {
-          if (startAudio.currentTime >= 50.5){
-            this._fadeOutAudio(startAudio);
-            startAudio.pause();
-            audioStart1.currentTime = 56.5;
-            this._fadeInAudio(audioStart1);
-            audioStart1.play();
-          }
-        });
         break;
       case 'match_end':
         isHighlight = true;
+        isMatchEnd = true;
+        this._pauseAllAudio();
         break;
     }
 
@@ -162,76 +138,137 @@ export class InGameController {
   // Logs info updates
   _infoUpdateHandler(infoUpdate) {
     let isHighlight = false;
-  
-    if (infoUpdate.feature === 'match_info') {
-      // isHighlight = true;
-      let roundType = JSON.parse(infoUpdate.info.match_info.round_type);
-      if (roundType.native_name == 'Carousel' || roundType.native_name == 'Encounter_Carousel'){
-        isCarousel = true;
-        isHighlight = true;
-        _heartsteelAudios.forEach(i => {
-          let audio = document.getElementById(i);
-          audio.pause();
-          audio.currentTime = 0;
-        })
-        let audioStartCar = document.getElementById('carouselStart');
-        let audioCar = document.getElementById('carousel');
-        // let audioEndCar = document.getElementById('carouselEnd');
-        audioStartCar.play();
-        audioStartCar.addEventListener("timeupdate", () => {
-          if (audioStartCar.currentTime >= 0.9){
-            audioStartCar.pause();
-            audioStartCar.currentTime = 0;
-            audioCar.play();
-          }
-        });
-      }
-      else {
+    // let playerStatus = JSON.parse(infoUpdate.info.roster.playerStatus);
+    if (!isMatchEnd){
+      if (infoUpdate.feature === 'match_info') {
         let roundType = JSON.parse(infoUpdate.info.match_info.round_type);
-        let stageNumber = roundType.stage;
-        let stage = parseInt(stageNumber.split("-")[0]);
-        if (isCarousel){
-          isCarousel = false;
-          let audioCar = document.getElementById('carousel');
-          let audioEndCar = document.getElementById('carouselEnd');
-          audioCar.pause();
-          audioCar.currentTime = 0;
-          audioEndCar.play();
-          audioEndCar.addEventListener("timeupdate", () => {
-            if (audioEndCar.currentTime >= 1.8){
-              audioEndCar.pause();
-              audioEndCar.currentTime = 0;
-              _heartsteelAudios.forEach(i => {
-                let audio = document.getElementById(i);
-                audio.play();
-              })
+        if (roundType.native_name == 'Carousel' || roundType.native_name == 'Encounter_Carousel' || roundType.native_name == 'Encounter_Group'){  //Carousel audio
+          isCarousel = true;
+          isHighlight = true;
+          chosenAudios.forEach(i => {  //Reset chosen audios after carousel
+            let audio = document.getElementById(i);
+            audio.pause();
+            audio.currentTime = 0;
+          })
+          let audioStartCar = document.getElementById('carouselStart'); //Carousel start audio
+          let audioCar = document.getElementById('carousel'); //Carousel audio
+          audioStartCar.play();
+          audioStartCar.addEventListener("timeupdate", () => {
+            if (audioStartCar.currentTime >= 0.9){ //End carousel start audio
+              audioStartCar.pause();
+              audioStartCar.currentTime = 0;
+              audioCar.play(); //Start carousel audio
             }
           });
         }
-        // if (stage == 1 && stageNumber != '1-1'){
-        //   let startAudio = document.getElementById('gameStart');
-        //   if (startAudio.currentTime > 0) {
-        //     startAudio.pause();
-        //     startAudio.currentTime = 0;
-        //   };
-        // }
-        else if (stage > 1){
-          this._pauseAllAudio();
-          _heartsteelAudios.forEach(i => {
-            let audio = document.getElementById(i);
-            audio.play();
-            this._fadeInAudio(audio);
-          });
+        else {
+          let roundType = JSON.parse(infoUpdate.info.match_info.round_type);
+          let stageNumber = roundType.stage;
+          let stage = parseInt(stageNumber.split("-")[0]);
+          if (isCarousel){ //Check if last round is carousel
+            isCarousel = false;
+            let audioCar = document.getElementById('carousel'); //Carousel audio
+            let audioEndCar = document.getElementById('carouselEnd'); //Carousel end audio
+            audioCar.pause();
+            audioCar.currentTime = 0;
+            audioEndCar.play(); // Start carousel end audio
+            audioEndCar.addEventListener("timeupdate", () => {
+              if (audioEndCar.currentTime >= 1.8){ //End carousel end audio
+                audioEndCar.pause();
+                audioEndCar.currentTime = 0;
+                chosenAudios.forEach(i => { //Replay chosen audios after carousel
+                  let audio = document.getElementById(i);
+                  audio.play();
+                })
+              }
+            });
+          }
+          else if (stage > 1){
+            if (isNoTraitEnded == false){
+              isNoTraitEnded = true; //Check if it isn't the first stage -> end no trait audio
+              this._pauseAllAudio();
+              chosenAudios.forEach(i => {
+                let audio = document.getElementById(i);
+                audio.play();
+                audio.volume = 1;
+                this._fadeInAudio(audio);
+                audio.addEventListener("timeupdate", () => {
+                  this._checkLoopEarly(audio);
+                });
+              });
+            }
+          }
+          else {
+            if (stageNumber == '1-1'){
+              isHighlight = true;
+              audioNoTraitEarly.volume = 0;
+              startAudio.play();
+              startAudio.addEventListener("timeupdate", () => {
+                if (startAudio.currentTime >= 50.5){ //End audio game start
+                  this._fadeOutAudio(startAudio);
+                  startAudio.pause();
+                  audioNoTraitEarly.currentTime = 56.5;
+                  this._fadeInAudio(audioNoTraitEarly); //Start audio no trait early
+                  audioNoTraitEarly.play();
+                }
+              });
+            }
+            else if (startAudio.paused){
+              if (audioNoTraitEarly.paused){
+                audioNoTraitEarly.currentTime = 56.5;
+                this._fadeInAudio(audioNoTraitEarly); //Start audio no trait early
+                audioNoTraitEarly.play();
+              }
+            }
+          }
+        }
+        this.inGameView.logInfoUpdate(JSON.stringify(infoUpdate), isHighlight);
+      }
+      else if (infoUpdate.feature === 'roster'){
+        this.inGameView.logInfoUpdate(JSON.stringify(infoUpdate), true);
+        let playerStatus = JSON.parse(infoUpdate.info.roster.player_status);
+        for (let playerName in playerStatus) {
+            if (playerStatus.hasOwnProperty(playerName)) {
+                let player = playerStatus[playerName];
+                if (player.health <= 20 && isLate == false) {
+                  isLate = true;
+                  this._pauseAllAudio();
+                  chosenAudios = ['heartsteelLate1', 'heartsteelLate2', 'heartsteelLate3']; // At least one player has 0 health
+                  chosenAudios.forEach(i => {
+                    let audio = document.getElementById(i);
+                    audio.currentTime = 10.62;
+                    audio.play();
+                    audio.addEventListener("timeupdate", () => {
+                        this._checkLoopLate(audio);
+                    });
+                  });
+                }
+            }
         }
       }
-      this.inGameView.logInfoUpdate(JSON.stringify(infoUpdate), isHighlight);
+    }
+    else if (infoUpdate.feature === 'roster') {
+      this.inGameView.logInfoUpdate(JSON.stringify(infoUpdate), true);
+      let playerRank = 0;
+      let playerStatus = JSON.parse(infoUpdate.info.roster.player_status);
+      for (let playerName in playerStatus) {
+          if (playerStatus.hasOwnProperty(playerName)) {
+              let player = playerStatus[playerName];
+              if (player.localplayer === true) {
+                  playerRank = player.rank;
+                  break;
+              }
+          }
+      }
+      if (playerRank > 1) loseAudio.play();
+      else if (playerRank == 1) winAudio.play();
     }
   }  
 
-  _checkLoop(audio) {
-      if (audio.currentTime >= 191.77) { // 192 seconds = 3 minutes and 12 seconds
+  _checkLoopEarly(audio) {
+      if (audio.currentTime >= 191.77) {
         audio.pause();
-        _heartsteelAudios.forEach(i => {
+        chosenAudios.forEach(i => {
           let audio1 = document.getElementById(i);
           audio1.pause();
           audio1.currentTime = 0;
@@ -239,6 +276,18 @@ export class InGameController {
         })
       }
   }
+
+  _checkLoopLate(audio) {
+    if (audio.currentTime >= 165.05) {
+      audio.pause();
+      chosenAudios.forEach(i => {
+        let audio1 = document.getElementById(i);
+        audio1.pause();
+        audio1.currentTime = 10.62;
+        audio1.play();
+      })
+    }
+}
 
   _fadeInAudio(audioElement) {
     const duration = 2000; // Animation duration in milliseconds

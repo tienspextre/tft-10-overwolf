@@ -84,8 +84,9 @@ export const kGamesFeatures = new Map([
       'announcer',
       'counters',
       'damage',
-      'heal',
-      'carousel'
+      'heal', 
+      'carousel',
+      'roster'
     ]
   ],
   // League of Legends Launcher
