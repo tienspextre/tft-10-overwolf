@@ -5,6 +5,7 @@ import { kHotkeySecondScreen, kHotkeyToggle } from '../../scripts/constants/hotk
 
 let chosenAudios = ['heartsteelEarly1', 'heartsteelEarly2', 'heartsteelEarly3'];
 let chosenLateAudios2 = ['heartsteelLate11', 'heartsteelLate22', 'heartsteelLate33'];
+let lateRep = false;
 let isCarousel = false;
 let isMatchEnd = false;
 let isLate = false;
@@ -123,7 +124,13 @@ export class InGameController {
           audio.addEventListener("timeupdate", () => {
               this._checkLoopEarly(audio);
           });
-        })
+        });
+        chosenLateAudios2.forEach(i => {
+          let audio1 = document.getElementById(i);
+          audio1.addEventListener("timeupdate", () => {
+            this._checkLoopLate2(audio1);
+          });
+        });
         break;
       case 'match_end':
         isHighlight = true;
@@ -230,13 +237,13 @@ export class InGameController {
         for (let playerName in playerStatus) {
             if (playerStatus.hasOwnProperty(playerName)) {
                 let player = playerStatus[playerName];
-                if (player.health <= 20 && isLate == false) {
+                if (player.health == 0 && isLate == false) {
                   isLate = true;
                   this._pauseAllAudio();
                   chosenAudios = ['heartsteelLate1', 'heartsteelLate2', 'heartsteelLate3']; // At least one player has 0 health
                   chosenAudios.forEach(i => {
                     let audio = document.getElementById(i);
-                    audio.currentTime = 10.62;
+                    audio.currentTime = 10.66;
                     audio.play();
                     audio.addEventListener("timeupdate", () => {
                         this._checkLoopLate(audio);
@@ -278,16 +285,34 @@ export class InGameController {
   }
 
   _checkLoopLate(audio) {
-    if (audio.currentTime >= 165.05) {
-      audio.pause();
+    if (audio.currentTime >= 154.60 && lateRep == false) {
+      lateRep = true;
+      chosenLateAudios2.forEach(i => {
+        let audio1 = document.getElementById(i);
+        audio1.play();
+      });
+    }
+  }
+
+  _checkLoopLate2(audio) {
+    if (audio.currentTime >= 10.60) {
+      lateRep = false;
+      chosenLateAudios2.forEach(i => {
+        let audio2 = document.getElementById(i);
+        audio2.pause();
+      });
       chosenAudios.forEach(i => {
         let audio1 = document.getElementById(i);
         audio1.pause();
-        audio1.currentTime = 10.62;
+        audio1.currentTime = audio.currentTime;
         audio1.play();
-      })
+      });
+      chosenLateAudios2.forEach(i => {
+        let audio2 = document.getElementById(i);
+        audio2.currentTime = 0;
+      });
     }
-}
+  }
 
   _fadeInAudio(audioElement) {
     const duration = 2000; // Animation duration in milliseconds
