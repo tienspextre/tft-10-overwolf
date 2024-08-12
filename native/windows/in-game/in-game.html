@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../css/ingame.css" />
     <link rel="stylesheet" href="../../css/modal.css" />
     <title>Overwolf Sample App - In-Game window</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
   </head>
   <body class="in-game">
     <!-- -------------------------------- Header ------------------------------- -->
@@ -14,25 +15,20 @@
     <header class="app-header">
       <img src="../../img/header_icon.svg" />
       <h1>Sample App / in-game window</h1>
-      <audio id="gameStart" preload="auto"><source src="music/start.ogg" type="audio/ogg"></audio>
+      <!-- <audio id="gameStart" preload="auto"><source src="music/start.ogg" type="audio/ogg"></audio>
       <audio id="noTraitEarly" preload="auto"><source src="music/no trait 1.ogg" type="audio/ogg"></audio>
-      <audio id="heartsteelEarly1" preload="auto"><source src="music/kda early drum.ogg" type="audio/ogg"></audio>
-      <audio id="heartsteelEarly2" preload="auto"><source src="music/kda early main.ogg" type="audio/ogg"></audio>
-      <audio id="heartsteelEarly3" preload="auto"><source src="music/kda early secondary.ogg" type="audio/ogg"></audio>
-      <audio id="heartsteelLate1" preload="auto"><source src="music/kda late drum.ogg" type="audio/ogg"></audio>
-      <audio id="heartsteelLate2" preload="auto"><source src="music/kda late main.ogg" type="audio/ogg"></audio>
-      <audio id="heartsteelLate3" preload="auto"><source src="music/kda late secondary.ogg" type="audio/ogg"></audio>
-      <audio id="heartsteelLate11" preload="auto"><source src="music/kda late drum.ogg" type="audio/ogg"></audio>
-      <audio id="heartsteelLate22" preload="auto"><source src="music/kda late main.ogg" type="audio/ogg"></audio>
-      <audio id="heartsteelLate33" preload="auto"><source src="music/kda late secondary.ogg" type="audio/ogg"></audio>
       <audio id="carouselStart" preload="auto"><source src="music/carousel start.ogg" type="audio/ogg"></audio>
       <audio id="carousel" preload="auto"><source src="music/carousel kda + jazz.mp3" type="audio/mp3"></audio>
       <audio id="carouselEnd" preload="auto"><source src="music/carousel end.ogg" type="audio/ogg"></audio>
       <audio id="matchEndLose" preload="auto"><source src="music/lose.ogg"></audio>
-      <audio id="matchEndWin" preload="auto"><source src="music/win.ogg"></audio>
+      <audio id="matchEndWin" preload="auto"><source src="music/win.ogg"></audio> -->
       <!-- <audio controls="controls" onloadeddata="var audioPlayer = this; setTimeout(function() { audioPlayer.play(); }, 0)">
         <source src="Kalimba.mp3" type="audio/mp3" />
       </audio> -->
+      <button id="kda" value="kda">KDA</button>
+      <button id="heartsteel" value="heartsteel">Heartsteel</button>
+      <button id="bit8" value="bit8">8-bit</button>
+      <button id="noTrait" value="noTrait">No trait</button>
       <div class="hotkey-text"> 
         Show/Hide Hotkey:
         <kbd id="hotkey-toggle"></kbd>
