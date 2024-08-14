@@ -142,35 +142,15 @@ let lateAudios = {
 let chosenAudios = [];
 let intervals = [];
 // let chosenLateAudios2 = ['heartsteelLate11', 'heartsteelLate22', 'heartsteelLate33'];
-let trait = createWatchedVariable('noTrait', function(newValue) {
-    console.log('Value changed to:', newValue);
-	let time = chosenAudios[0].seek();
-	let state = chosenAudios[0].playing();
-	let volume = chosenAudios[0].volume();
-	chosenAudios.forEach(sound => {
-		sound.fade(volume, 0, 500);
-		setTimeout(() => {
-			sound.stop();
-		}, 500);
-	});
-	if (isLate) chosenAudios = audioFiles[newValue].Late;
-	else chosenAudios = audioFiles[newValue].Early;
-	chosenAudios.forEach(sound => {
-		if (!state){
-			sound.play('loop');
-			sound.seek(time);
-		}
-		else sound.fade(0, volume, 500);
-	});
-});
+let trait = 'noTrait'
 let isCarousel = false;
 let isMatchEnd = false;
 let isLate = false;
-// let audioNoTraitEarly = document.getElementById('noTraitEarly');
-// let startAudio = document.getElementById('gameStart'); //Audio game start
-// let winAudio = document.getElementById('matchEndWin');
-// let loseAudio = document.getElementById('matchEndLose');
 let lost = false;
+let triggered = false;
+let timeoutIds = [];
+let stageNumber;
+let currentSprite;
 
 export class InGameController {
 constructor() {
@@ -182,68 +162,19 @@ constructor() {
 	this.owEventBus = null;
 	this.createEarlySounds();
     this.createLateSounds();
-	document.getElementById("kda").addEventListener("click", function() {
-		let buttonValue = this.value;
-		trait.set(buttonValue);
+	document.getElementById("kda").addEventListener("click", () => {
+		this.musicChange("kda");
 	});
-	document.getElementById("heartsteel").addEventListener("click", function() {
-		let buttonValue = this.value;
-		trait.set(buttonValue);
+	document.getElementById("heartsteel").addEventListener("click", () => {
+		this.musicChange("heartsteel");
 	});
-	document.getElementById("bit8").addEventListener("click", function() {
-		let buttonValue = this.value;
-		trait.set(buttonValue);
+	document.getElementById("bit8").addEventListener("click", () => {
+		this.musicChange("bit8");
 	});
-	document.getElementById("noTrait").addEventListener("click", function() {
-		let buttonValue = this.value;
-		trait.set(buttonValue);
+	document.getElementById("noTrait").addEventListener("click", () => {
+		this.musicChange("noTrait");
 	});
-	// kdaEarlyFiles.forEach(file => {
-	// 	var sound = new Howl({
-	// 		src: [file],
-	// 		sprite: {
-	// 			loop: [6840, 192000, true] // Loop from 6.84s to 198.84s
-	// 		},
-	// 		volume: 0,
-	// 		preload: true // Preload the sound
-	// 	});
-	// 	earlyAudios['kdaEarly'].push(sound);
-	// });
-	// heartsteelEarlyFiles.forEach(file => {
-	// 	var sound = new Howl({
-	// 		src: [file],
-	// 		sprite: {
-	// 			loop: [6840, 192000, true] // Loop from 6.84s to 198.84s
-	// 		},
-	// 		volume: 0,
-	// 		preload: true // Preload the sound
-	// 	});
-	// 	earlyAudios['heartsteelEarly'].push(sound);
-	// });
-	// heartsteelLateFiles.forEach(file => {
-	// 	var sound = new Howl({
-	// 		src: [file],
-	// 		sprite: {
-	// 			loop1: [0, 165600], // Loop from 6.84s to 198.84s
-	// 			loop2: [0, 165600]
-	// 		},
-	// 		volume: 0,
-	// 		preload: true // Preload the sound
-	// 	});
-	// 	lateAudios['heartsteelLate'].push(sound);
-	// });
-	// kdaLateFiles.forEach(file => {
-	// 	var sound = new Howl({
-	// 		src: [file],
-	// 		sprite: {
-	// 			loop1: [0, 165600], // Loop from 6.84s to 198.84s
-	// 			loop2: [0, 165600]
-	// 		},
-	// 		volume: 0,
-	// 		preload: true // Preload the sound
-	// 	});
-	// 	lateAudios['kdaLate'].push(sound);
-	// });
+	
 }
 
 createHowlObjects(fileList, targetArray, loopConfig) {
@@ -277,7 +208,7 @@ createEarlySounds() {
 
 createLateSounds() {
 	const loopConfig = {
-		loop: [10670, 154600, true]
+		loop: [0, 167000]
 		// onend: function() {
 		// 	this.seek(10670);
 		// }
@@ -384,10 +315,10 @@ _gameEventHandler(event) {
 		case 'matchEnd':
 		case 'match_start':
 			// this.inGameView.logEvent(tmp, isHighlight);
-			chosenAudios = audioFiles[trait.get()].Early;
+			chosenAudios = audioFiles[trait].Early;
 			chosenAudios.forEach(sound => {
 				if (!sound.playing()){
-					sound.play('loop');
+					currentSprite = sound.play('loop');
 				}
 			});
 			// chosenLateAudios2.forEach(i => {
@@ -423,6 +354,9 @@ _infoUpdateHandlerSet10(infoUpdate) {
 				chosenAudios.forEach(sound => {
 					sound.stop();
 				});
+				timeoutIds.forEach(timeoutId => clearTimeout(timeoutId));
+				timeoutIds = []; 
+				triggered = false;
 				this._clearIntervals();
 				// let audioStartCar = document.getElementById('carouselStart'); //Carousel start audio
 				// let audioCar = document.getElementById('carousel'); //Carousel audio
@@ -450,7 +384,7 @@ _infoUpdateHandlerSet10(infoUpdate) {
 		}
 		else {
 			let roundType = JSON.parse(infoUpdate.info.match_info.round_type);
-			let stageNumber = roundType.stage;
+			stageNumber = roundType.stage;
 			let stage = parseInt(stageNumber.split("-")[0]);
 			if (isCarousel){ //Check if last round is carousel
 				isCarousel = false;
@@ -460,7 +394,7 @@ _infoUpdateHandlerSet10(infoUpdate) {
 				audioEndCar.play(); // Start carousel end audio
 				setTimeout(() => {
 					if (isLate) {
-						this.latePlay();
+						this.latePlay(10.67);
 					} else {
 						this.earlyPlay();
 					}
@@ -475,15 +409,11 @@ _infoUpdateHandlerSet10(infoUpdate) {
 			}
 			else if (stage > 1){
 				// if (audioNoTraitEarly.playing()) audioNoTraitEarly.stop();
-				if (isLate){
-					chosenAudios.forEach(sound => {
-						sound.stop();
-					});
-					chosenAudios = audioFiles[trait.get()].Late;
-					this.latePlay();
+				if (isLate && !triggered){
+					this.latePlay(10.67);
 				}
 				else {
-					this.earlyPlay();
+					this.earlyPlay(0);
 				}
 			}
 			else {
@@ -492,12 +422,12 @@ _infoUpdateHandlerSet10(infoUpdate) {
 					startAudio.play();
 					chosenAudios.forEach(sound => {
 						if (!sound.playing()){
-							sound.play('loop');
+							currentSprite = sound.play('loop');
 						}
 					});
 					setTimeout(() => {
 						startAudio.fade(1, 0, 500);
-						this.earlyPlay();
+						this.earlyPlay(0);
 						startAudio.stop();
 					}, 50500);
 					// let tmp = setInterval(() => {
@@ -527,7 +457,7 @@ _infoUpdateHandlerSet10(infoUpdate) {
 					// 	audioNoTraitEarly.seek(56500);
 					// 	audioNoTraitEarly.fade(0, 1, 500);
 					// }
-					this.earlyPlay();
+					this.earlyPlay(0);
 				}
 			}
 		}
@@ -544,14 +474,14 @@ _infoUpdateHandlerSet10(infoUpdate) {
 					chosenAudios.forEach(sound => {
 						sound.stop();
 					});
-					chosenAudios = audioFiles[trait.get()].Late;
-					this.latePlay();
+					chosenAudios = audioFiles[trait].Late;
+					this.latePlay(10.67);
 				}
 			}
 		}
 	}
 	}
-	else if (infoUpdate.feature === 'roster') {
+	else if (infoUpdate.feature === 'roster') { 
 		this.inGameView.logInfoUpdate(JSON.stringify(infoUpdate), true);
 		let playerRank = 0;
 		let playerStatus = JSON.parse(infoUpdate.info.roster.player_status);
@@ -565,7 +495,7 @@ _infoUpdateHandlerSet10(infoUpdate) {
 			}
 		}
 		if (playerRank > 1 && lost === false) {
-			chosenAudios.forEach(sound => {
+			chosenAudios.forEach(sound => {  
 				sound.stop();
 			});
 			loseAudio.play();
@@ -655,22 +585,37 @@ _infoUpdateHandlerSet10(infoUpdate) {
 	// 	}, 20);
 	// }
 
-	latePlay(){
-		if (chosenAudios.length === 0) chosenAudios = audioFiles[trait.get()].Late;
-		chosenAudios.forEach(sound => {
-			if (!sound.playing()){
-				sound.play('loop');
-				sound.fade(sound.volume(), 1, 500);
+	latePlay(time){
+		if (chosenAudios.length === 0) chosenAudios = audioFiles[trait].Late;
+		if (!triggered){
+			chosenAudios.forEach(sound => {
+				const spriteid = sound.play('loop');
+				currentSprite = spriteid;
+				sound.seek(time, spriteid);
+				sound.fade(sound.volume(), 1, 500, spriteid);
+			});
+			if (time * 1000 <= 154670){
+				const timeoutId = setTimeout(() => {
+					triggered = false;
+					this.latePlay(0);
+				}, 154670 - time * 1000);
+				timeoutIds.push(timeoutId);
 			}
-		});
+			else {
+				triggered = false;
+				this.latePlay(time - 154.67);
+			}
+		}
+		triggered = true;
 	}
 
-	earlyPlay(){
+	earlyPlay(time){
 		// console.log(chosenAudios);
-		if (chosenAudios.length === 0) chosenAudios = audioFiles[trait.get()].Early;
+		if (chosenAudios.length === 0) chosenAudios = audioFiles[trait].Early;
 		chosenAudios.forEach(sound => {
 			if (!sound.playing()){
-				sound.play('loop');
+				currentSprite = sound.play('loop');
+				sound.seek(time);
 			}
 			sound.fade(sound.volume(), 1, 500);
 		});
@@ -683,6 +628,42 @@ _infoUpdateHandlerSet10(infoUpdate) {
 	// 	});
 	// }
 
+	musicChange(newValue){
+		if (trait !== newValue){
+			let last = chosenAudios.length - 1;
+			let time = chosenAudios[last].seek();
+			if (time == 0) time = chosenAudios[last].seek(currentSprite);
+			let state = chosenAudios[last].playing();
+			// setInterval(() => {
+			// 	console.log(chosenAudios[last].seek());
+			// 	console.log(chosenAudios[last].seek(currentSprite));
+			// 	console.log(currentSprite);
+			// 	console.log(last);
+			// }, 1000);
+			chosenAudios.forEach(sound => {
+				sound.fade(1, 0, 500);
+				setTimeout(() => {
+					sound.stop();
+				}, 500);
+			});
+			if (isLate) {
+				chosenAudios = audioFiles[newValue].Late;
+				timeoutIds.forEach(timeoutId => clearTimeout(timeoutId));
+				timeoutIds = []; 
+				triggered = false;
+			}
+			else chosenAudios = audioFiles[newValue].Early;
+			trait = newValue;
+			chosenAudios.forEach(sound => {
+				if (state){
+					if (isLate) this.latePlay(time);
+					else this.earlyPlay(time);
+					sound.fade(0, 1, 500);
+					// sound.seek(time);
+				}
+			});
+		}
+	}
 	
 }
 
@@ -698,4 +679,3 @@ function createWatchedVariable(initialValue, onchange) {
 		}
 	};
 }
-
