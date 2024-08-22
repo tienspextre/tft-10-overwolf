@@ -1,5 +1,5 @@
 body {
-  background-color: #333333;
+  background-color: #e5e5e5;
   margin: 0px;
   display: flex;
   flex-direction: column;
@@ -12,22 +12,31 @@ main {
   display: flex;
   flex: 1;
   position: relative;
-  padding: 38px;
+  padding: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 h1 {
-  font-family: "Roboto Mono", sans-serif;
+  font-family: beaufortForLol;
   font-style: normal;
-  font-weight: normal;
+  font-weight: bold;
   font-size: 18px;
-  color: #d5d5d5;
+  color: #000000;
 }
 
-#logs {
-  display: flex;
-  justify-content: space-between;
-  flex: 0 0 auto;
-  width: calc(100% - 210px);
+#sets h1 {
+  display: flex; /* This is optional as block is the default */
+  width: 100%; /* Ensure full width if needed */
+  justify-content: center;
+  font-size: 30px;
+  margin-bottom: 50px;
+}
+
+#sets div {
+  display: flex; /* This is optional as block is the default */
+  width: 100%; /* Ensure full width if needed */
+  justify-content: center;
 }
 
 .logColumn {
@@ -139,3 +148,75 @@ button.logCopy:hover {
   background: #8d8d8d;
   color: #ffffff;
 }
+
+.set-cover {
+  aspect-ratio: 1/1;
+  width: auto;
+  height: auto;
+  max-width: 200px;
+  max-height: 200px;
+  margin: 30px;
+}
+
+.trait-cover {
+  aspect-ratio: 45/52;
+  width: 60px;
+  height: auto;
+  /*max-width: 200px;*/
+  /*max-height: 200px;*/
+  margin-bottom: 30px;
+}
+
+.music-list {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 30px)
+}
+
+.music-list.active {
+  display: flex;
+}
+
+#set10 h1 {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  font-size: 30px;
+  margin-bottom: 50px;
+}
+
+#set10 div {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.trait-group {
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.trait-button {
+}
+
+.gradient-text {
+  background-image: linear-gradient(90deg, rgba(54,62,255,1) 14%, rgba(203,0,255,1) 63%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.traits {
+  overflow-y: auto;
+  height: 600px;
+}
+
+@font-face {
+  font-family: beaufortForLol;
+  src: url(fonts/BeaufortforLOL-Regular.ttf);
+}
+

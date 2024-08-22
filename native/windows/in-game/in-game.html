@@ -7,29 +7,20 @@
     <link rel="stylesheet" href="../../css/ingame.css" />
     <link rel="stylesheet" href="../../css/modal.css" />
     <title>Overwolf Sample App - In-Game window</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="in-game">
     <!-- -------------------------------- Header ------------------------------- -->
 
     <header class="app-header">
-      <img src="../../img/header_icon.svg" />
-      <h1>Sample App / in-game window</h1>
-      <!-- <audio id="gameStart" preload="auto"><source src="music/start.ogg" type="audio/ogg"></audio>
-      <audio id="noTraitEarly" preload="auto"><source src="music/no trait 1.ogg" type="audio/ogg"></audio>
-      <audio id="carouselStart" preload="auto"><source src="music/carousel start.ogg" type="audio/ogg"></audio>
-      <audio id="carousel" preload="auto"><source src="music/carousel kda + jazz.mp3" type="audio/mp3"></audio>
-      <audio id="carouselEnd" preload="auto"><source src="music/carousel end.ogg" type="audio/ogg"></audio>
-      <audio id="matchEndLose" preload="auto"><source src="music/lose.ogg"></audio>
-      <audio id="matchEndWin" preload="auto"><source src="music/win.ogg"></audio> -->
-      <!-- <audio controls="controls" onloadeddata="var audioPlayer = this; setTimeout(function() { audioPlayer.play(); }, 0)">
-        <source src="Kalimba.mp3" type="audio/mp3" />
-      </audio> -->
-      <button id="kda" value="kda">KDA</button>
-      <button id="heartsteel" value="heartsteel">Heartsteel</button>
-      <button id="bit8" value="bit8">8-bit</button>
-      <button id="noTrait" value="noTrait">No trait</button>
-      <div class="hotkey-text"> 
+      <!-- <img src="../../img/header_icon.svg" /> -->
+      <h1>TFT Music Revival</h1>
+<!--      <button id="kda" value="kda">KDA</button>-->
+<!--      <button id="trueDamage" value="heartsteel">True Damage</button>-->
+<!--      <button id="disco" value="bit8">Disco</button>-->
+<!--      <button id="hyperpop" value="hyperpop">No trait</button>-->
+      <div class="hotkey-text">
         Show/Hide Hotkey:
         <kbd id="hotkey-toggle"></kbd>
       </div>
@@ -44,9 +35,10 @@
     </header>
 
     <!-- --------------------------------- Main -------------------------------- -->
-    <main>
-      <div id="logs">
-        <div id="events" class="logColumn">
+    <main class="">
+      <div id="sets" class="music-list active">
+        <!-- <div id="events" class="logColumn">
+
           <h1>Game Events</h1>
           <div id="eventsLog" class="dataText"></div>
           <button id="copyEvents" class="logCopy">
@@ -69,10 +61,250 @@
           them to the screen. Some specific events (Match Start/End, Kill and
           Death) are painted in <span style="color: #00DEFA">teal</span> and
           logged to the developers console.
-        </p>
+        </p> -->
+        <h1>Choose set</h1>
+        <div>
+          <img src="../../img/set10/cover.jfif" class="set-cover" onclick="showScreen('set10')">
+          <img src="../../img/set12/cover.jpg" class="set-cover" onclick="showScreen('set12')">
+        </div>
+      </div>
+
+      <div id="set10" class="music-list">
+        <h1>Set 10 Trait List</h1>
+        <div class="traits">
+          <div class="trait-group">
+            <img src="../../img/set10/default%20kda.png" class="trait-cover" style="display: block">
+            <img src="../../img/set10/kda.png" class="trait-cover" style="display: none">
+            <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "kda", "type": "drum"}'>Drum</button>
+              </div>
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "kda", "type": "main"}'>Main</button>
+              </div>
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "kda", "type": "secondary"}'>Secondary</button>
+              </div>
+            </div>
+          </div>
+          <div class="trait-group">
+            <img src="../../img/set10/default%20heartsteel.png" class="trait-cover" style="display: block">
+            <img src="../../img/set10/heartsteel.png" class="trait-cover" style="display: none">
+            <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "heartsteel", "type": "drum"}'>Drum</button>
+              </div>
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "heartsteel", "type": "main"}'>Main</button>
+              </div>
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "heartsteel", "type": "secondary"}'>Secondary</button>
+              </div>
+            </div>
+          </div>
+          <div class="trait-group">
+            <img src="../../img/set10/default%20true%20damage.png" class="trait-cover" style="display: block">
+            <img src="../../img/set10/true%20damage.png" class="trait-cover" style="display: none">
+            <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "trueDamage", "type": "drum"}'>Drum</button>
+              </div>
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "trueDamage", "type": "main"}'>Main</button>
+              </div>
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "trueDamage", "type": "secondary"}'>Secondary</button>
+              </div>
+            </div>
+          </div>
+          <div class="trait-group">
+            <img src="../../img/set10/default%20pentakill.png" class="trait-cover" style="display: block">
+            <img src="../../img/set10/pentakill.png" class="trait-cover" style="display: none">
+            <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "pentakill", "type": "drum"}'>Drum</button>
+              </div>
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "pentakill", "type": "main"}'>Main</button>
+              </div>
+              <div class="rounded-md">
+                <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "pentakill", "type": "secondary"}'>Secondary</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="trait-group">
+              <img src="../../img/set10/default%20disco.png" class="trait-cover" style="display: block">
+              <img src="../../img/set10/disco.png" class="trait-cover" style="display: none">
+              <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "disco", "type": "drum"}'>Drum</button>
+                </div>
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "disco", "type": "main"}'>Main</button>
+                </div>
+              </div>
+            </div>
+            <div class="trait-group">
+              <img src="../../img/set10/default%208bit.png" class="trait-cover" style="display: block">
+              <img src="../../img/set10/8bit.png" class="trait-cover" style="display: none">
+              <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "bit8", "type": "drum"}'>Drum</button>
+                </div>
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "bit8", "type": "main"}'>Main</button>
+                </div>
+              </div>
+            </div>
+            <div class="trait-group">
+              <img src="../../img/set10/default%20punk.png" class="trait-cover" style="display: block">
+              <img src="../../img/set10/punk.png" class="trait-cover" style="display: none">
+              <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "punk", "type": "drum"}'>Drum</button>
+                </div>
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "punk", "type": "main"}'>Main</button>
+                </div>
+              </div>
+            </div>
+            <div class="trait-group">
+              <img src="../../img/set10/default%20emo.png" class="trait-cover" style="display: block">
+              <img src="../../img/set10/emo.png" class="trait-cover" style="display: none">
+              <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "emo", "type": "drum"}'>Drum</button>
+                </div>
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "emo", "type": "main"}'>Main</button>
+                </div>
+              </div>
+            </div>
+            <div class="trait-group">
+              <img src="../../img/set10/default%20edm.png" class="trait-cover" style="display: block">
+              <img src="../../img/set10/edm.png" class="trait-cover" style="display: none">
+              <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "edm", "type": "drum"}'>Drum</button>
+                </div>
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "edm", "type": "main"}'>Main</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="trait-group">
+              <img src="../../img/set10/default%20hyperpop.png" class="trait-cover" style="display: block">
+              <img src="../../img/set10/hyperpop.png" class="trait-cover" style="display: none">
+              <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "hyperpop", "type": "main"}'>Main</button>
+                </div>
+              </div>
+            </div>
+            <div class="trait-group">
+              <img src="../../img/set10/default%20maestro.png" class="trait-cover" style="display: block">
+              <img src="../../img/set10/maestro.png" class="trait-cover" style="display: none">
+              <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "maestro", "type": "main"}'>Main</button>
+                </div>
+              </div>
+            </div>
+            <div class="trait-group">
+              <img src="../../img/set10/default%20mixmaster.png" class="trait-cover" style="display: block">
+              <img src="../../img/set10/mixmaster.png" class="trait-cover" style="display: none">
+              <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "mixmaster", "type": "main"}'>Main</button>
+                </div>
+              </div>
+            </div>
+            <div class="trait-group">
+              <img src="../../img/set10/default%20jazz.png" class="trait-cover" style="display: block">
+              <img src="../../img/set10/jazz.png" class="trait-cover" style="display: none">
+              <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "jazz", "type": "main"}'>Main</button>
+                </div>
+              </div>
+            </div>
+            <div class="trait-group">
+              <img src="../../img/set10/default%20illbeats.png" class="trait-cover" style="display: block">
+              <img src="../../img/set10/illbeats.png" class="trait-cover" style="display: none">
+              <div class="inline-flex rounded-lg border border-gray-100 bg-gray-100 p-1">
+                <div class="rounded-md">
+                  <button class="trait-button inline-block rounded-md px-4 py-2 text-sm text-gray-500 hover:text-gray-700 focus:relative" value='{"trait": "illbeats", "type": "main"}'>Main</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="width: 400px; margin: 50px">
+          <a class="group inline-block rounded-full bg-black p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75 ease-in-out duration-300" href="#">
+            <span class="relative block rounded-full bg-white px-8 py-3 text-sm font-medium text-black group-hover:bg-transparent group-hover:text-white transition-all duration-300 ease-in-out flex items-center">
+              <span class="absolute left-7.5 top-1/2 transform -translate-y-1/2 -translate-x-full w-4 h-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                  <!-- Arrow Icon -->
+                  <svg class="w-4 h-4 text-black group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                  </svg>
+              </span>
+              <span class="transition-transform duration-300 ease-in-out group-hover:translate-x-2">Back</span>
+          </span>
+          </a>
+          <div style="margin-right: 50px"></div>
+          <a id="saveSet10" class="group inline-block rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-[2px] hover:text-white focus:outline-none focus:ring active:text-opacity-75 ease-in-out duration-300" href="#">
+            <span class="block rounded-full bg-white px-8 py-3 text-sm font-medium transition-all duration-300 ease-in-out bg-white text-black group-hover:bg-transparent group-hover:text-white">
+                Save
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div id="set12" class="music-list">
+
       </div>
     </main>
+    <script>
+      const buttons = document.getElementsByClassName('trait-button');
+      for (let button of buttons) {
+          button.addEventListener('click', toggleButtonState);
+      }
+      function showScreen(screenId) {
+          // Hide all screens
+          const screens = document.getElementsByClassName('music-list');
+          for (let screen of screens) {
+              screen.classList.remove('active');
+          }
+          
+          // Show the selected screen
+          document.getElementById(screenId).classList.add('active');
+      }
+      function toggleButtonState(event) {
+        const button = event.target;
+        if (button.classList.contains('gradient-text')) {
+          button.classList.remove('bg-white');
+          button.classList.remove('gradient-text');
+          button.classList.remove('shadow-sm');
+          // button.classList.remove('text-blue-500');
+          button.classList.add('text-gray-500');
+          let tmp = button.parentNode;
+          tmp.classList.remove('bg-white');
+        }
+        else {
+          button.classList.remove('bg-gray-500');
+          button.classList.remove('text-gray-500');
+          // button.classList.add('text-blue-500');
+          let tmp = button.parentNode;
+          tmp.classList.add('bg-white');
+          button.classList.add('shadow-sm');
+          button.classList.add('gradient-text');
 
+        }
+      }
+    </script>
     <script type="module" src="./in-game.js"></script>
   </body>
 </html>
