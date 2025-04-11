@@ -8,37 +8,37 @@ import { GoogleAnalytics } from '../../scripts/services/google-analytics.js';
 import { kGameClassIds, kGamesFeatures } from '../../scripts/constants/games-features.js';
 import { kHotkeySecondScreen, kHotkeyToggle } from '../../scripts/constants/hotkeys-ids.js';
 
-const kdaEarlyFiles = ['../../music/set10/kda early drum.webm', '../../music/set10/kda early main.webm', '../../music/set10/kda early secondary.webm'];
-const pentakillEarlyFiles = ['../../music/set10/pentakill early drum.webm', '../../music/set10/pentakill early main.webm', '../../music/set10/pentakill early secondary.webm'];
-const trueDamageEarlyFiles = ['../../music/set10/true dmg early drum.webm', '../../music/set10/true dmg early main.webm', '../../music/set10/true dmg early secondary.webm'];
-const heartsteelEarlyFiles = ['../../music/set10/heartsteel early drum.webm', '../../music/set10/heartsteel early main.webm', '../../music/set10/heartsteel early secondary.webm'];
-const discoEarlyFiles = ['../../music/set10/disco early drum.webm', '../../music/set10/disco early main.webm'];
-const bit8EarlyFiles = ['../../music/set10/8bit early drum.webm', '../../music/set10/8bit early main.webm'];
-const emoEarlyFiles = ['../../music/set10/emo early drum.webm', '../../music/set10/emo early main.webm'];
-const punkEarlyFiles = ['../../music/set10/punk early drum.webm', '../../music/set10/punk early main.webm'];
-const countryEarlyFiles = ['../../music/set10/country early drum.webm', '../../music/set10/country early main.webm'];
-const noTraitEarlyFiles = ['../../music/set10/no trait 1.webm'];
-const jazzEarlyFiles = ['../../music/set10/jazz early.webm'];
-const maestroEarlyFiles = ['../../music/set10/maestro early.webm'];
-const mixmasterEarlyFiles = ['../../music/set10/mixmaster early.webm'];
-const illbeatsEarlyFiles = ['../../music/set10/illbeats early.webm'];
-const hyperpopEarlyFiles = ['../../music/set10/hyperpop early.webm'];
+const kdaEarlyFiles = ['../../music/set10/kda early drum.ogg', '../../music/set10/kda early main.ogg', '../../music/set10/kda early secondary.ogg'];
+const pentakillEarlyFiles = ['../../music/set10/pentakill early drum.ogg', '../../music/set10/pentakill early main.ogg', '../../music/set10/pentakill early secondary.ogg'];
+const trueDamageEarlyFiles = ['../../music/set10/true dmg early drum.ogg', '../../music/set10/true dmg early main.ogg', '../../music/set10/true dmg early secondary.ogg'];
+const heartsteelEarlyFiles = ['../../music/set10/heartsteel early drum.ogg', '../../music/set10/heartsteel early main.ogg', '../../music/set10/heartsteel early secondary.ogg'];
+const discoEarlyFiles = ['../../music/set10/disco early drum.ogg', '../../music/set10/disco early main.ogg'];
+const bit8EarlyFiles = ['../../music/set10/8bit early drum.ogg', '../../music/set10/8bit early main.ogg'];
+const emoEarlyFiles = ['../../music/set10/emo early drum.ogg', '../../music/set10/emo early main.ogg'];
+const punkEarlyFiles = ['../../music/set10/punk early drum.ogg', '../../music/set10/punk early main.ogg'];
+const countryEarlyFiles = ['../../music/set10/country early drum.ogg', '../../music/set10/country early main.ogg'];
+const noTraitEarlyFiles = ['../../music/set10/no trait 1.ogg'];
+const jazzEarlyFiles = ['../../music/set10/jazz early.ogg'];
+const maestroEarlyFiles = ['../../music/set10/maestro early.ogg'];
+const mixmasterEarlyFiles = ['../../music/set10/mixmaster early.ogg'];
+const illbeatsEarlyFiles = ['../../music/set10/illbeats early.ogg'];
+const hyperpopEarlyFiles = ['../../music/set10/hyperpop early.ogg'];
 
-const kdaLateFiles = ['../../music/set10/late/kda late drum.webm', '../../music/set10/late/kda late main.webm', '../../music/set10/late/kda late secondary.webm'];
-const pentakillLateFiles = ['../../music/set10/late/pentakill late drum.webm', '../../music/set10/late/pentakill late main.webm', '../../music/set10/late/pentakill late secondary.webm'];
-const trueDamageLateFiles = ['../../music/set10/late/true dmg late drum.webm', '../../music/set10/late/true dmg late main.webm', '../../music/set10/late/true dmg late secondary.webm'];
-const heartsteelLateFiles = ['../../music/set10/late/heartsteel late drum.webm', '../../music/set10/late/heartsteel late main.webm', '../../music/set10/late/heartsteel late secondary.webm'];
-const discoLateFiles = ['../../music/set10/late/disco late drum.webm', '../../music/set10/late/disco late main.webm'];
-const bit8LateFiles = ['../../music/set10/late/8bit late drum.webm', '../../music/set10/late/8bit late main.webm'];
-const emoLateFiles = ['../../music/set10/late/emo late drum.webm', '../../music/set10/late/emo late main.webm'];
-const punkLateFiles = ['../../music/set10/late/punk late drum.webm', '../../music/set10/late/punk late main.webm'];
-const countryLateFiles = ['../../music/set10/late/country late drum.webm', '../../music/set10/late/country late main.webm'];
-const noTraitLateFiles = ['../../music/set10/late/no trait 2.webm'];
-const jazzLateFiles = ['../../music/set10/late/jazz late.webm'];
-const maestroLateFiles = ['../../music/set10/late/maestro late.webm'];
-const mixmasterLateFiles = ['../../music/set10/late/mixmaster late.webm'];
-const illbeatsLateFiles = ['../../music/set10/late/illbeats late.webm'];
-const hyperpopLateFiles = ['../../music/set10/late/hyperpop late.webm'];
+const kdaLateFiles = ['../../music/set10/late/kda late drum.ogg', '../../music/set10/late/kda late main.ogg', '../../music/set10/late/kda late secondary.ogg'];
+const pentakillLateFiles = ['../../music/set10/late/pentakill late drum.ogg', '../../music/set10/late/pentakill late main.ogg', '../../music/set10/late/pentakill late secondary.ogg'];
+const trueDamageLateFiles = ['../../music/set10/late/true dmg late drum.ogg', '../../music/set10/late/true dmg late main.ogg', '../../music/set10/late/true dmg late secondary.ogg'];
+const heartsteelLateFiles = ['../../music/set10/late/heartsteel late drum.ogg', '../../music/set10/late/heartsteel late main.ogg', '../../music/set10/late/heartsteel late secondary.ogg'];
+const discoLateFiles = ['../../music/set10/late/disco late drum.ogg', '../../music/set10/late/disco late main.ogg'];
+const bit8LateFiles = ['../../music/set10/late/8bit late drum.ogg', '../../music/set10/late/8bit late main.ogg'];
+const emoLateFiles = ['../../music/set10/late/emo late drum.ogg', '../../music/set10/late/emo late main.ogg'];
+const punkLateFiles = ['../../music/set10/late/punk late drum.ogg', '../../music/set10/late/punk late main.ogg'];
+const countryLateFiles = ['../../music/set10/late/country late drum.ogg', '../../music/set10/late/country late main.ogg'];
+const noTraitLateFiles = ['../../music/set10/late/no trait 2.ogg'];
+const jazzLateFiles = ['../../music/set10/late/jazz late.ogg'];
+const maestroLateFiles = ['../../music/set10/late/maestro late.ogg'];
+const mixmasterLateFiles = ['../../music/set10/late/mixmaster late.ogg'];
+const illbeatsLateFiles = ['../../music/set10/late/illbeats late.ogg'];
+const hyperpopLateFiles = ['../../music/set10/late/hyperpop late.ogg'];
 
 var globalVolume = 1;
 
@@ -52,37 +52,37 @@ const audioNoTraitEarly = new Howl({
 });
 
 const startAudio = new Howl({
-	src: ['../../music/set10/start.webm'],
+	src: ['../../music/set10/start.ogg'],
 	volume: 1, 
-
+  preload: true
 });
 
 const winAudio = new Howl({
-	src: ['../../music/set10/win.webm'],
+	src: ['../../music/set10/win.ogg'],
 	volume: 1, 
 
 });
 
 const loseAudio = new Howl({
-	src: ['../../music/set10/lose.webm'],
+	src: ['../../music/set10/lose.ogg'],
 	volume: 1, 
 
 });
 
 const audioStartCar = new Howl({
-	src: ['../../music/set10/carousel start.webm'],
+	src: ['../../music/set10/carousel start.ogg'],
 	volume: 1, 
 
 });
 
 const audioCar = new Howl({
-	src: ['../../music/set10/carousel kda + jazz.webm'],
+	src: ['../../music/set10/carousel kda + jazz.mp3'],
 	volume: 1, 
 
 });
 
 const audioEndCar = new Howl({
-	src: ['../../music/set10/carousel end.webm'],
+	src: ['../../music/set10/carousel end.ogg'],
 	volume: 1, 
 
 });
@@ -91,21 +91,22 @@ var audioFiles = {
   noTrait: {
     Early: {
       main: new Howl({
-        src: ['../../music/set10/no trait 1.webm'],
+        src: ['../../music/set10/no trait 1.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
-
+        preload: true
       }),
     },
     Late: {
       main: new Howl({
-        src: ['../../music/set10/late/no trait 2.webm'],
+        src: ['../../music/set10/late/no trait 2.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: true 
 
       }),
     }
@@ -113,53 +114,64 @@ var audioFiles = {
   kda: {
     Early: {
       drum: new Howl({
-        src: ['../../music/set10/kda early drum.webm'],
+        src: ['../../music/set10/kda early drum.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
-
+        preload: false,
+        html5: true 
       }),
       main: new Howl({
-        src: ['../../music/set10/kda early main.webm'],
+        src: ['../../music/set10/kda early main.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       secondary: new Howl({
-        src: ['../../music/set10/kda early secondary.webm'],
+        src: ['../../music/set10/kda early secondary.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       drum: new Howl({
-        src: ['../../music/set10/late/kda late drum.webm'],
+        src: ['../../music/set10/late/kda late drum.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/late/kda late main.webm'],
+        src: ['../../music/set10/late/kda late main.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       secondary: new Howl({
-        src: ['../../music/set10/late/kda late secondary.webm'],
+        src: ['../../music/set10/late/kda late secondary.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -167,53 +179,65 @@ var audioFiles = {
   pentakill: {
     Early: {
       drum: new Howl({
-        src: ['../../music/set10/pentakill early drum.webm'],
+        src: ['../../music/set10/pentakill early drum.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/pentakill early main.webm'],
+        src: ['../../music/set10/pentakill early main.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       secondary: new Howl({
-        src: ['../../music/set10/pentakill early secondary.webm'],
+        src: ['../../music/set10/pentakill early secondary.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       drum: new Howl({
-        src: ['../../music/set10/late/pentakill late drum.webm'],
+        src: ['../../music/set10/late/pentakill late drum.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/late/pentakill late main.webm'],
+        src: ['../../music/set10/late/pentakill late main.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       secondary: new Howl({
-        src: ['../../music/set10/late/pentakill late secondary.webm'],
+        src: ['../../music/set10/late/pentakill late secondary.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -221,53 +245,65 @@ var audioFiles = {
   trueDamage: {
     Early: {
       drum: new Howl({
-        src: ['../../music/set10/true dmg early drum.webm'],
+        src: ['../../music/set10/true dmg early drum.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/true dmg early main.webm'],
+        src: ['../../music/set10/true dmg early main.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       secondary: new Howl({
-        src: ['../../music/set10/true dmg early secondary.webm'],
+        src: ['../../music/set10/true dmg early secondary.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       drum: new Howl({
-        src: ['../../music/set10/late/true dmg late drum.webm'],
+        src: ['../../music/set10/late/true dmg late drum.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/late/true dmg late main.webm'],
+        src: ['../../music/set10/late/true dmg late main.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       secondary: new Howl({
-        src: ['../../music/set10/late/true dmg late secondary.webm'],
+        src: ['../../music/set10/late/true dmg late secondary.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -275,53 +311,65 @@ var audioFiles = {
   heartsteel: {
     Early: {
       drum: new Howl({
-        src: ['../../music/set10/heartsteel early drum.webm'],
+        src: ['../../music/set10/heartsteel early drum.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/heartsteel early main.webm'],
+        src: ['../../music/set10/heartsteel early main.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       secondary: new Howl({
-        src: ['../../music/set10/heartsteel early secondary.webm'],
+        src: ['../../music/set10/heartsteel early secondary.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       drum: new Howl({
-        src: ['../../music/set10/late/heartsteel late drum.webm'],
+        src: ['../../music/set10/late/heartsteel late drum.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/late/heartsteel late main.webm'],
+        src: ['../../music/set10/late/heartsteel late main.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       secondary: new Howl({
-        src: ['../../music/set10/late/heartsteel late secondary.webm'],
+        src: ['../../music/set10/late/heartsteel late secondary.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -329,37 +377,45 @@ var audioFiles = {
   disco: {
     Early: {
       drum: new Howl({
-        src: ['../../music/set10/disco early drum.webm'],
+        src: ['../../music/set10/disco early drum.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/disco early main.webm'],
+        src: ['../../music/set10/disco early main.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       drum: new Howl({
-        src: ['../../music/set10/late/disco late drum.webm'],
+        src: ['../../music/set10/late/disco late drum.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/late/disco late main.webm'],
+        src: ['../../music/set10/late/disco late main.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -367,37 +423,45 @@ var audioFiles = {
   bit8: {
     Early: {
       drum: new Howl({
-        src: ['../../music/set10/8bit early drum.webm'],
+        src: ['../../music/set10/8bit early drum.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/8bit early main.webm'],
+        src: ['../../music/set10/8bit early main.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       drum: new Howl({
-        src: ['../../music/set10/late/8bit late drum.webm'],
+        src: ['../../music/set10/late/8bit late drum.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/late/8bit late main.webm'],
+        src: ['../../music/set10/late/8bit late main.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -405,37 +469,45 @@ var audioFiles = {
   emo: {
     Early: {
       drum: new Howl({
-        src: ['../../music/set10/emo early drum.webm'],
+        src: ['../../music/set10/emo early drum.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/emo early main.webm'],
+        src: ['../../music/set10/emo early main.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       drum: new Howl({
-        src: ['../../music/set10/late/emo late drum.webm'],
+        src: ['../../music/set10/late/emo late drum.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/late/emo late main.webm'],
+        src: ['../../music/set10/late/emo late main.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -443,37 +515,45 @@ var audioFiles = {
   edm: {
     Early: {
       drum: new Howl({
-        src: ['../../music/set10/edm early drum.webm'],
+        src: ['../../music/set10/edm early drum.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
-        volume: 0,
+        volume: 0, 
+        preload: false,
+        html5: true 
 
       }),
       main: new Howl({
-        src: ['../../music/set10/edm early main.webm'],
+        src: ['../../music/set10/edm early main.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
-        volume: 0,
+        volume: 0, 
+        preload: false,
+        html5: true 
 
       })
     },
     Late: {
       drum: new Howl({
-        src: ['../../music/set10/late/edm late drum.webm'],
+        src: ['../../music/set10/late/edm late drum.ogg'],
         sprite: {
           loop: [0, 167000]
         },
-        volume: 0,
+        volume: 0, 
+        preload: false,
+        html5: true 
 
       }),
       main: new Howl({
-        src: ['../../music/set10/late/edm late main.webm'],
+        src: ['../../music/set10/late/edm late main.ogg'],
         sprite: {
           loop: [0, 167000]
         },
-        volume: 0,
+        volume: 0, 
+        preload: false,
+        html5: true 
 
       })
     }
@@ -481,37 +561,45 @@ var audioFiles = {
   punk: {
     Early: {
       drum: new Howl({
-        src: ['../../music/set10/punk early drum.webm'],
+        src: ['../../music/set10/punk early drum.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/punk early main.webm'],
+        src: ['../../music/set10/punk early main.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       drum: new Howl({
-        src: ['../../music/set10/late/punk late drum.webm'],
+        src: ['../../music/set10/late/punk late drum.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/late/punk late main.webm'],
+        src: ['../../music/set10/late/punk late main.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -519,37 +607,45 @@ var audioFiles = {
   country: {
     Early: {
       drum: new Howl({
-        src: ['../../music/set10/country early drum.webm'],
+        src: ['../../music/set10/country early drum.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/country early main.webm'],
+        src: ['../../music/set10/country early main.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       drum: new Howl({
-        src: ['../../music/set10/late/country late drum.webm'],
+        src: ['../../music/set10/late/country late drum.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       }),
       main: new Howl({
-        src: ['../../music/set10/late/country late main.webm'],
+        src: ['../../music/set10/late/country late main.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -557,21 +653,25 @@ var audioFiles = {
   jazz: {
     Early: {
       main: new Howl({
-        src: ['../../music/set10/jazz early.webm'],
+        src: ['../../music/set10/jazz early.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       main: new Howl({
-        src: ['../../music/set10/late/jazz late.webm'],
+        src: ['../../music/set10/late/jazz late.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -579,21 +679,25 @@ var audioFiles = {
   maestro: {
     Early: {
       main: new Howl({
-        src: ['../../music/set10/maestro early.webm'],
+        src: ['../../music/set10/maestro early.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       main: new Howl({
-        src: ['../../music/set10/late/maestro late.webm'],
+        src: ['../../music/set10/late/maestro late.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -601,21 +705,25 @@ var audioFiles = {
   mixmaster: {
     Early: {
       main: new Howl({
-        src: ['../../music/set10/mixmaster early.webm'],
+        src: ['../../music/set10/mixmaster early.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       main: new Howl({
-        src: ['../../music/set10/late/mixmaster late.webm'],
+        src: ['../../music/set10/late/mixmaster late.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -623,21 +731,25 @@ var audioFiles = {
   illbeats: {
     Early: {
       main: new Howl({
-        src: ['../../music/set10/illbeats early.webm'],
+        src: ['../../music/set10/illbeats early.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       main: new Howl({
-        src: ['../../music/set10/late/illbeats late.webm'],
+        src: ['../../music/set10/late/illbeats late.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -645,21 +757,25 @@ var audioFiles = {
   hyperpop: {
     Early: {
       main: new Howl({
-        src: ['../../music/set10/hyperpop early.webm'],
+        src: ['../../music/set10/hyperpop early.ogg'],
         sprite: {
           loop: [6840, 192000, true]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     },
     Late: {
       main: new Howl({
-        src: ['../../music/set10/late/hyperpop late.webm'],
+        src: ['../../music/set10/late/hyperpop late.ogg'],
         sprite: {
           loop: [0, 167000]
         },
         volume: 0, 
+        preload: false,
+        html5: true  
 
       })
     }
@@ -671,12 +787,12 @@ var audioFilesSet12 = {
   bunny: {
     first: {
       init: new Howl({
-        src: ['../../music/set12/start first.webm'],
+        src: ['../../music/set12/start first.ogg'],
         volume: 1, 
 
       }),
       combat: new Howl({
-        src: ['../../music/set12/bunny first combat.webm'],
+        src: ['../../music/set12/bunny first combat.ogg'],
         volume: 1, 
         sprite: {
           loop: [0, 121840, true]
@@ -684,7 +800,7 @@ var audioFilesSet12 = {
 
       }),
       nonCombat: new Howl({
-        src: ['../../music/set12/bunny first non-combat.webm'],
+        src: ['../../music/set12/bunny first non-combat.ogg'],
         volume: 1, 
         sprite: {
           loop: [0, 121840, true]
@@ -694,12 +810,12 @@ var audioFilesSet12 = {
     },
     second: {
       init: new Howl({
-        src: ['../../music/set12/start second.webm'],
+        src: ['../../music/set12/start second.ogg'],
         volume: 1, 
 
       }),
       combat: new Howl({
-        src: ['../../music/set12/bunny second combat.webm'],
+        src: ['../../music/set12/bunny second combat.ogg'],
         volume: 1, 
         sprite: {
           loop: [0, 114000, true]
@@ -707,7 +823,7 @@ var audioFilesSet12 = {
 
       }),
       nonCombat: new Howl({
-        src: ['../../music/set12/bunny second non-combat.webm'],
+        src: ['../../music/set12/bunny second non-combat.ogg'],
         volume: 1, 
         sprite: {
           loop: [0, 114000, true]
@@ -800,7 +916,7 @@ export class BackgroundController {
     if (!isGameRunning) {
       // Open desktop window
       WindowsService.restore(kWindowNames.DESKTOP);
-      Howler.stop();
+      this.resetOriginalMusicState();
       // Close game windows
       WindowsService.close(kWindowNames.IN_GAME);
       WindowsService.close(kWindowNames.SECOND);
@@ -835,36 +951,48 @@ export class BackgroundController {
 
     // Open in-game window
     await this._restoreGameWindow();
+    WindowsService.bringToFront(kWindowNames.IN_GAME);
 
     // Close desktop window
     await WindowsService.close(kWindowNames.DESKTOP);
   }
 
-  resetOriginalVolume() {
+  resetOriginalMusicState() {
     // Reset each Howl instance's volume to its original value
-    audioNoTraitEarly.volume(0);
-    startAudio.volume(1);
-    winAudio.volume(1);
-    loseAudio.volume(1);
-    audioStartCar.volume(1);
-    audioCar.volume(1);
-    audioEndCar.volume(1);
-    audioFiles.forEach(trait => {
-      trait[Early].forEach(sound => {
-        sound.volume(0);
-      });
-      trait[Late].forEach(sound => {
-        sound.volume(0);
-      });
-    });
-    audioFilesSet12.forEach(trait => {
-      trait[first].forEach(sound => {
-        sound.volume(1);
-      })
-      trait[second].forEach(sound => {
-        sound.volume(1);
-      })
-    })
+    Howler.stop();
+    // Howler.unload();
+    // startAudio.load();
+    // audioFiles['noTrait']['Late']['main'].load();
+    // audioFiles['noTrait']['Early']['main'].load();
+    // audioCar.load();
+    // audioEndCar.load();
+    // audioStartCar.load();
+    // winAudio.load();
+    // loseAudio.load();
+    // audioNoTraitEarly.load();
+    // audioNoTraitEarly.volume(0);
+    // startAudio.volume(1);
+    // winAudio.volume(1);
+    // loseAudio.volume(1);
+    // audioStartCar.volume(1);
+    // audioCar.volume(1);
+    // audioEndCar.volume(1);
+    // audioFiles.forEach(trait => {
+    //   trait[Early].forEach(sound => {
+    //     sound.volume(0);
+    //   });
+    //   trait[Late].forEach(sound => {
+    //     sound.volume(0);
+    //   });
+    // });
+    // audioFilesSet12.forEach(trait => {
+    //   trait[first].forEach(sound => {
+    //     sound.volume(1);
+    //   })
+    //   trait[second].forEach(sound => {
+    //     sound.volume(1);
+    //   })
+    // })
   }
 
   /**
@@ -876,6 +1004,7 @@ export class BackgroundController {
 
     if (!gameInfo || !gameInfo.isRunning) {
       await WindowsService.restore(kWindowNames.DESKTOP);
+      this.resetOriginalMusicState();
       return;
     }
 
@@ -908,8 +1037,10 @@ export class BackgroundController {
 
     if (isGameRunning) {
       await this._restoreGameWindow();
+      // WindowsService.bringToFront(kWindowNames.IN_GAME);
     } else {
       await WindowsService.restore(kWindowNames.DESKTOP);
+      this.resetOriginalMusicState();
     }
   }
 
@@ -919,11 +1050,11 @@ export class BackgroundController {
    * @private
    */
   _restoreGameWindow() {
-    if (this.hasMultipleMonitors) {
-      return WindowsService.restore(kWindowNames.SECOND);
-    } else {
+    // if (this.hasMultipleMonitors) {
+    //   return WindowsService.restore(kWindowNames.SECOND);
+    // } else {
       return WindowsService.restore(kWindowNames.IN_GAME);
-    }
+    // }
   }
 
   /**
