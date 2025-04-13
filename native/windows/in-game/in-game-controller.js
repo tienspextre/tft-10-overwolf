@@ -71,7 +71,6 @@ export class InGameController {
 	 */
 	_addBeforeCloseListener() {
 		window.addEventListener('beforeunload', e => {
-			delete e.returnValue;
 			this._clearTimeouts();
 			chosenAudios = [];
 			chosenParts = [];
@@ -80,7 +79,11 @@ export class InGameController {
 			isMatchEnd = false;
 			lost = false;
 			triggered = false;
+			// chosenAudios.forEach(sound => {
+			// 	sound.stop();
+			// });
 			Howler.stop();
+			delete e.returnValue;
 			this.owEventBus.removeListener(this._eventListenerBound);
 		});
 	}
@@ -246,6 +249,7 @@ export class InGameController {
 								// setTimeout(() => {
 								// 	audioNoTraitEarly.stop();
 								// }, 500);
+								const time = audioNoTraitEarly.seek();
 								audioNoTraitEarly.stop();
 							}
 							if (isLate) {
@@ -289,7 +293,7 @@ export class InGameController {
 						}
 					}
 					// this.inGameView.logInfoUpdate(JSON.stringify(infoUpdate), isHighlight);
-					this._log(JSON.stringify(infoUpdate));
+					// this._log(JSON.stringify(infoUpdate));
 				} catch (error){
 				}
 			}
@@ -536,6 +540,7 @@ export class InGameController {
 
 
 	async latePlaySet10(time, volume) {
+		let sprites = [];
 		if (chosenAudios.length === 0) {
 			chosenAudios = Object.values(audioFiles['noTrait']['Late']);
 			console.log(chosenAudios);
@@ -543,12 +548,16 @@ export class InGameController {
 		if (!triggered) {
 			chosenAudios.forEach(sound => {
 				const spriteid = sound.play('loop');
-				currentSprite = spriteid;
+				sprites.push(spriteid);
 				sound.once('play', () => {
+					sound.fade(0, volume, 500, spriteid);
 					sound.seek(time, spriteid);
 				})
-				sound.fade(sound.volume(), volume, 500, spriteid);
+				currentSprite = spriteid;
 			});
+			// chosenAudios.forEach(sound => {
+			// 	sound.seek(chosenAudios[0].seek(sprites[0]), sprites[chosenAudios.indexOf(sound)]);
+			// });
 			if (time * 1000 <= 154670) {
 				const timeoutId = setTimeout(() => {
 					triggered = false;
@@ -558,11 +567,15 @@ export class InGameController {
 			}
 			else {
 				triggered = false;
-				this.latePlaySet10(time - 154.67, volume);
+				await this.latePlaySet10(time - 154.67, volume);
+				this._log("latePlaySet10 time-154.67" + (time - 154.67) + " " + volume);
 			}
 		}
 		this._log("latePlaySet10 " + time + " " + volume);
 		triggered = true;
+		sprites.forEach(sound => {
+			sound.seek(sprites[0].seek());
+		});
 	}
 
 	async earlyPlaySet10(time, volume) {
@@ -576,6 +589,9 @@ export class InGameController {
 				sound.once('play', () => {
 					sound.seek(time, spriteId);
 				})
+			}
+			else {
+				sound.seek(chosenAudios[0].seek());
 			}
 			sound.fade(sound.volume(), volume, 500);
 		});
