@@ -3,7 +3,7 @@
  * This will listen to events from the game provided by
  * Overwolf's Game Events Provider
  */
-const REGISTER_RETRY_TIMEOUT = 10000;
+const REGISTER_RETRY_TIMEOUT = 2000;
 
 let storedEventsListener = null;
 let storedInfoListener = null;

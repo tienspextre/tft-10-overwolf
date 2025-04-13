@@ -916,7 +916,7 @@ export class BackgroundController {
     if (!isGameRunning) {
       // Open desktop window
       WindowsService.restore(kWindowNames.DESKTOP);
-      this.resetOriginalMusicState();
+      // this.resetOriginalMusicState();
       // Close game windows
       WindowsService.close(kWindowNames.IN_GAME);
       WindowsService.close(kWindowNames.SECOND);
@@ -924,6 +924,7 @@ export class BackgroundController {
     }
 
     const gameInfo = await this.runningGameService.getRunningGameInfo();
+    console.log(gameInfo);
 
     if (
       !gameInfo ||
@@ -1004,7 +1005,7 @@ export class BackgroundController {
 
     if (!gameInfo || !gameInfo.isRunning) {
       await WindowsService.restore(kWindowNames.DESKTOP);
-      this.resetOriginalMusicState();
+      // this.resetOriginalMusicState();
       return;
     }
 
@@ -1040,7 +1041,7 @@ export class BackgroundController {
       // WindowsService.bringToFront(kWindowNames.IN_GAME);
     } else {
       await WindowsService.restore(kWindowNames.DESKTOP);
-      this.resetOriginalMusicState();
+      // this.resetOriginalMusicState();
     }
   }
 
