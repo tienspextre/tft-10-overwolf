@@ -195,6 +195,7 @@ export class InGameController {
 	}
 
 	_infoUpdateHandler(infoUpdate) {
+		console.log(infoUpdate);
 		if (set === 10) this._infoUpdateHandlerSet10(infoUpdate);
 		if (set === 12) this._infoUpdateHandlerSet12(infoUpdate);
 		// this.inGameView.logInfoUpdate(JSON.stringify(infoUpdate), false);

@@ -916,7 +916,7 @@ export class BackgroundController {
     if (!isGameRunning) {
       // Open desktop window
       WindowsService.restore(kWindowNames.DESKTOP);
-      // this.resetOriginalMusicState();
+      this.resetOriginalMusicState();
       // Close game windows
       WindowsService.close(kWindowNames.IN_GAME);
       WindowsService.close(kWindowNames.SECOND);
@@ -946,16 +946,32 @@ export class BackgroundController {
       GepService.setRequiredFeatures(
         gameFeatures,
         e => this._onGameEvents(e),
-        e => this._onInfoUpdate(e)
+        async e => {
+          this._onInfoUpdate(e)
+          if (e.info.live_client_data.game_data) {
+            const gameData = JSON.parse(e.info.live_client_data.game_data);
+            if (gameData.gameMode === 'TFT') {
+              // Open in-game window
+              WindowsService.getWindowState(kWindowNames.IN_GAME)
+              .then(async state => {
+                if (state !== 'normal') {
+                  await this._restoreGameWindow();
+                }
+              })
+              .catch(error => {
+                console.error('Error getting window state:', error);
+              });
+              // WindowsService.bringToFront(kWindowNames.IN_GAME);
+
+              // Close desktop window
+              await WindowsService.close(kWindowNames.DESKTOP);
+            }
+          }
+        }
       );
     }
 
-    // Open in-game window
-    await this._restoreGameWindow();
-    WindowsService.bringToFront(kWindowNames.IN_GAME);
-
-    // Close desktop window
-    await WindowsService.close(kWindowNames.DESKTOP);
+    
   }
 
   resetOriginalMusicState() {
@@ -1005,7 +1021,7 @@ export class BackgroundController {
 
     if (!gameInfo || !gameInfo.isRunning) {
       await WindowsService.restore(kWindowNames.DESKTOP);
-      // this.resetOriginalMusicState();
+      this.resetOriginalMusicState();
       return;
     }
 
@@ -1019,14 +1035,32 @@ export class BackgroundController {
       GepService.setRequiredFeatures(
         gameFeatures,
         e => this._onGameEvents(e),
-        e => this._onInfoUpdate(e)
+        async e => {
+          this._onInfoUpdate(e);
+          // console.log(e);
+          if (e.info.live_client_data.game_data) {
+            const gameData = JSON.parse(e.info.live_client_data.game_data);
+            if (gameData.gameMode === 'TFT') {
+              WindowsService.getWindowState(kWindowNames.IN_GAME)
+              .then(async state => {
+                if (state !== 'normal' && !BackgroundController._launchedWithGameEvent()) {
+                  await this._restoreGameWindow();
+                }
+              })
+              .catch(error => {
+                console.error('Error getting window state:', error);
+              });
+              
+            }
+          }          
+        }
       );
     }
 
     // If app was not launched automatically, restore the a relevant game window
-    if (!BackgroundController._launchedWithGameEvent()) {
-      await this._restoreGameWindow();
-    }
+    // if (!BackgroundController._launchedWithGameEvent()) {
+    //   await this._restoreGameWindow();
+    // }
   }
 
   /**
@@ -1037,11 +1071,27 @@ export class BackgroundController {
     const isGameRunning = await this.runningGameService.isGameRunning();
 
     if (isGameRunning) {
-      await this._restoreGameWindow();
+      this.owInfoUpdatesStore.forEach(async e => {
+        if (e.info.live_client_data.game_data) {
+          const gameData = JSON.parse(e.info.live_client_data.game_data);
+          if (gameData.gameMode === 'TFT') {
+            WindowsService.getWindowState(kWindowNames.IN_GAME)
+              .then(async state => {
+                if (state !== 'normal') {
+                  await this._restoreGameWindow();
+                }
+              })
+              .catch(error => {
+                console.error('Error getting window state:', error);
+              });
+            return;
+          }
+        }
+      })
       // WindowsService.bringToFront(kWindowNames.IN_GAME);
     } else {
       await WindowsService.restore(kWindowNames.DESKTOP);
-      // this.resetOriginalMusicState();
+      this.resetOriginalMusicState();
     }
   }
 
@@ -1188,7 +1238,7 @@ export class BackgroundController {
    */
   _onInfoUpdate(infoUpdate) {
     this.owInfoUpdatesStore.push(infoUpdate);
-
+    // console.log(infoUpdate);
     this.owEventBus.trigger('info', infoUpdate);
   }
 }
