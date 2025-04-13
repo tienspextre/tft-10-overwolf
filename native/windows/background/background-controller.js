@@ -961,7 +961,7 @@ export class BackgroundController {
               .catch(error => {
                 console.error('Error getting window state:', error);
               });
-              // WindowsService.bringToFront(kWindowNames.IN_GAME);
+              WindowsService.bringToFront(kWindowNames.IN_GAME);
 
               // Close desktop window
               await WindowsService.close(kWindowNames.DESKTOP);
@@ -1079,6 +1079,7 @@ export class BackgroundController {
               .then(async state => {
                 if (state !== 'normal') {
                   await this._restoreGameWindow();
+                  WindowsService.bringToFront(kWindowNames.IN_GAME);
                 }
               })
               .catch(error => {
